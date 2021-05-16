@@ -18,8 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 16, 2021
 
 Changes made in last modification :
-1. Added the entire code for the application, i.e., main function -> the labels, entry box, buttons.
-2. Defined the main tkinter window for the application, where the user can get to enter the IP address and then continue the task.
+1. Added the codes (if..else statements) to validate the user entered IP address and the response from the server too.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -42,41 +41,57 @@ def fetchIp(ipAddress):
 	""" The function that fetches the required information about the IP address mentioned in the arguments while calling the information and the result (the fetched information about the IP address) is displayed in a new tkinter window. """
 
 	try:
+		# Checking the user entered IP address before proceeding
+		if len(ipAddress) < 5:
+			# If the user entered IP address is less than 5 characters, then we raise the error
+
+			raise SyntaxError(f'Please enter proper IP address for proper search.')
+
 		# Fetching the information about the user entered IP address from the server
 		# Sending the POST HTTP request
 		response = get(f'http://ipinfo.io/{ipAddress}')
-		response = response.json()
-		text = ''
 
-		# Arranging the output text to be displayed
-		for key, value in response.items():
-			text += '[#] %-20s   :   %-30s\n' %(str(key).upper(), str(value))
+		# Checking the response from the server
+		if response == 200:
+			# If the response from the server states no error, then we continue the process
 
-		# Creating the tkinter window to display the result
-		outputWin = Tk()
-		outputWin.title('Output - IP Tracker (Python3)')
-		outputWin.config(background = 'black')
-		outputWin.resizable(0, 0)  # Making the tkinter window's size to remain fixed, i.e., it cannot change.
+			response = response.json()
+			text = ''
 
-		# Definining the heading label and the output label
-		Label(
-			outputWin,
-			text = 'Information fetched',
-			foreground = 'white',
-			background = 'black',
-			font = ('', 13, 'bold', 'italic'),
-			justify = 'left',
-			).pack(padx = 5, pady = 5)
-		Label(
-			outputWin,
-			text = text,
-			foreground = 'white',
-			background = 'black',
-			font = ('', 11, ''),
-			justify = 'left',
-			).pack(padx = 5, pady = 5)
+			# Arranging the output text to be displayed
+			for key, value in response.items():
+				text += '[#] %-20s   :   %-30s\n' %(str(key).upper(), str(value))
 
-		mainloop()
+			# Creating the tkinter window to display the result
+			outputWin = Tk()
+			outputWin.title('Output - IP Tracker (Python3)')
+			outputWin.config(background = 'black')
+			outputWin.resizable(0, 0)  # Making the tkinter window's size to remain fixed, i.e., it cannot change.
+
+			# Definining the heading label and the output label
+			Label(
+				outputWin,
+				text = 'Information fetched',
+				foreground = 'white',
+				background = 'black',
+				font = ('', 13, 'bold', 'italic'),
+				justify = 'left',
+				).pack(padx = 5, pady = 5)
+			Label(
+				outputWin,
+				text = text,
+				foreground = 'white',
+				background = 'black',
+				font = ('', 11, ''),
+				justify = 'left',
+				).pack(padx = 5, pady = 5)
+
+			mainloop()
+		else:
+			# If the response fromthe server states error, then we display the error message to the user
+
+			mb.showerror(f'{response.json()["error"]["title"]}', f'{response.json()["error"]["message"]}')
+			return 0
 
 	except Exception as e:
 		# If there are any errors encountered during the process, then we display the error message to the user
