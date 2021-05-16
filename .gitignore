@@ -1,0 +1,8 @@
+# The ignore list - IP Tracker [GUI, Python3]
+# ----
+# 1. Ignore the python3 cache directories as well as the test directories too.
+# ----
+
+tests/
+test*
+__pycache__/
