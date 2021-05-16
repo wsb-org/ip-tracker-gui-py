@@ -14,8 +14,12 @@ Usage :
 Author : Rishav Das (https://github.com/rdofficial/)
 Created on : May 16, 2021
 
-Last modified by : -
-Last modified on : -
+Last modified by : Rishav Das (https://github.com/rdofficial/)
+Last modified on : May 16, 2021
+
+Changes made in last modification :
+1. Added the entire code for the application, i.e., main function -> the labels, entry box, buttons.
+2. Defined the main tkinter window for the application, where the user can get to enter the IP address and then continue the task.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -79,3 +83,75 @@ def fetchIp(ipAddress):
 
 		mb.showerror('Error!', f'{e}')
 		return 0
+
+def main():
+	# Defining the main tkinter window
+	win = Tk()
+	win.title('IP Tracker (Python3)')
+	# win.geometry('400x400')
+	win.resizable(0, 0)
+	win.config(background = 'black')
+
+	# Defining the heading label
+	Label(
+		win,
+		text = 'IP Tracker',
+		foreground = 'white',
+		background = 'black',
+		font = ('', 15, 'bold', 'italic'),
+		).pack(padx = 5, pady = (10, 20))
+
+	# Defining the input box form for the user to enter the IP address
+	# ----
+	# 1. We will inlcude the form inside a tkinter Frame widget with variable name 'frame'.
+	# 2. We will define a label asking the user to enter the IP address of the target, and an Entrybox widget for the user to enter the value of IP address.
+	# 3. We will use a textvariable 'ipAddress' with String type to store the user entered input.
+	# 4. The continue button will be placed outside the frame.
+	# ----
+	ipAddress = StringVar(win)
+
+	# Defining the frame to contain the form elements
+	frame = Frame(win, background = 'black')
+	frame.pack(expand = True, fill = X, padx = 5, pady = 10)
+
+	# Defining the inner contents of the frame, i.e., the form elements (Label, and entry box)
+	Label(
+		frame,
+		text = 'Enter the IP address of target',
+		foreground = 'white',
+		background = 'black',
+		font = ('', 12),
+		).pack(side = LEFT, padx = 5, pady = 5)
+	Entry(
+		frame,
+		textvariable = ipAddress,
+		font = ('', 12),
+		).pack(side = RIGHT, padx = 5, pady = 5)
+
+	# Defining the continue button widget
+	Button(
+		win,
+		text = 'Continue',
+		font = ('', 12, 'bold'),
+		foreground = 'black',
+		background = 'white',
+		activeforeground = 'white',
+		activebackground = 'black',
+		relief = GROOVE,
+		command = lambda : fetchIp(ipAddress.get())
+		).pack(padx = 5, pady = 5)
+	# ----
+
+	mainloop()
+
+if __name__ == '__main__':
+	try:
+		main()
+	except KeyboardInterrupt:
+		# If the user presses CTRL+C key combo, then we exit
+
+		exit()
+	except Exception as e:
+		# If any errors encountered during the process, then we display the error message on the console screen
+
+		input(f'\n[ Error : {e} ]\nPress enter key to continue...')
