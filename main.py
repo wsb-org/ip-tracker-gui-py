@@ -18,7 +18,9 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 16, 2021
 
 Changes made in last modification :
-1. Added the codes (if..else statements) to validate the user entered IP address and the response from the server too.
+1. Added the close button on the output tkinter window.
+2. Updated the errors in previously made updates (at response status code handling).
+3. Updated the pady value for the buttons on the bottom of each tkinter window.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -52,7 +54,7 @@ def fetchIp(ipAddress):
 		response = get(f'http://ipinfo.io/{ipAddress}')
 
 		# Checking the response from the server
-		if response == 200:
+		if response.status_code == 200:
 			# If the response from the server states no error, then we continue the process
 
 			response = response.json()
@@ -86,6 +88,19 @@ def fetchIp(ipAddress):
 				justify = 'left',
 				).pack(padx = 5, pady = 5)
 
+			# Defining the close button on the output window. This button will destroy / close the output window, when the user clicks it.
+			Button(
+				outputWin,
+				text = 'Close',
+				font = ('', 12, 'bold'),
+				foreground = 'black',
+				background = 'white',
+				activeforeground = 'white',
+				activebackground = 'black',
+				relief = GROOVE,
+				command = outputWin.destroy,
+				).pack(padx = 5, pady = 10)
+
 			mainloop()
 		else:
 			# If the response fromthe server states error, then we display the error message to the user
@@ -96,6 +111,7 @@ def fetchIp(ipAddress):
 	except Exception as e:
 		# If there are any errors encountered during the process, then we display the error message to the user
 
+		raise e
 		mb.showerror('Error!', f'{e}')
 		return 0
 
@@ -154,7 +170,7 @@ def main():
 		activebackground = 'black',
 		relief = GROOVE,
 		command = lambda : fetchIp(ipAddress.get())
-		).pack(padx = 5, pady = 5)
+		).pack(padx = 5, pady = 10)
 	# ----
 
 	mainloop()
