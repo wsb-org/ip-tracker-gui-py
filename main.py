@@ -18,9 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 16, 2021
 
 Changes made in last modification :
-1. Added the close button on the output tkinter window.
-2. Updated the errors in previously made updates (at response status code handling).
-3. Updated the pady value for the buttons on the bottom of each tkinter window.
+1. Added the features of menubars, and their respective sub-menus but not added the commands for the menus.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -111,7 +109,6 @@ def fetchIp(ipAddress):
 	except Exception as e:
 		# If there are any errors encountered during the process, then we display the error message to the user
 
-		raise e
 		mb.showerror('Error!', f'{e}')
 		return 0
 
@@ -171,6 +168,42 @@ def main():
 		relief = GROOVE,
 		command = lambda : fetchIp(ipAddress.get())
 		).pack(padx = 5, pady = 10)
+	# ----
+
+	# Defining the menubar of the tkitner window
+	# ----
+	# 1. We will define a main menubar, which will contain all the sub-menus like toolsmenu, helpmenu, etc.
+	# 2. Further more we will separate commands in each menu using the separator.
+	# 3. Also there will be another sub-menus in each menu for making the commands more grouped. Like colorsmenu.
+	# ----
+	menubar = Menu(win)
+	win.config(menu = menubar)  # Configuring the main tkinter window to use the menubar
+
+	# Defining the toolsmenu
+	toolsmenu = Menu(menubar, font = ('', 10), tearoff = 0)
+	menubar.add_cascade(label = 'Tools', menu = toolsmenu)  # Configuring the toolsmenu with the main menubar
+	toolsmenu.add_command(label = 'History', command = None)
+	toolsmenu.add_command(label = 'Clear history', command = None)
+	toolsmenu.add_separator()
+	#
+	# Defining the colors sub-menu for the toolsmenu (This menu will show as a side menu in the tools menu and displays the list of the colors themes available for the tkinter window).
+	colorsmenu = Menu(toolsmenu, font = ('', 10), tearoff = 0)
+	toolsmenu.add_cascade(label = 'Color Themes', menu = colorsmenu)  # Configuring the colorsmenu with the toolsmenu
+	colorsmenu.add_command(label = 'Default', command = None)
+	colorsmenu.add_command(label = 'Tkinter Original', command = None)
+	colorsmenu.add_command(label = 'Black-White', command = None)
+	colorsmenu.add_command(label = 'Green-Black', command = None)
+	colorsmenu.add_command(label = 'Red-Black', command = None)
+
+	# Defining the helpmenu
+	helpmenu = Menu(menubar, font = ('', 10), tearoff = 0)
+	menubar.add_cascade(label = 'Help', menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
+	helpmenu.add_command(label = 'Documentation', command = None)
+	helpmenu.add_command(label = 'About the author', command = None)
+	helpmenu.add_command(label = 'Report a bug', command = None)
+	helpmenu.add_separator()
+	helpmenu.add_command(label = 'About IP Tracker', command = None)
+	helpmenu.add_command(label = 'Help', command = None)
 	# ----
 
 	mainloop()
