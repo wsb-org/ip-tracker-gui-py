@@ -18,10 +18,8 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Added the functions which serves the commands at the menubar. All the functions are contained inside a class named 'MenubarFunctions'.
-2. Defined the entire function of history logs related commands along with documentation.
-3. Added the application properties like session_history and the color_theme. Changed the foreground, background value for every widget as per color_theme.
-4. Added the exit command to the menubar + redefined the exit function with custom modification of saving the session history logs to the data.json in order to track overall tracking history.
+1. Added the function 'setColorTheme' to serve the menu commands of changing color themes of the tkinter window and widgets.
+2. Adding the menu command for setting the tkinter original theme.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -163,7 +161,35 @@ class MenubarFunctions:
 			return 0
 
 	def setColorTheme(foreground = 'white', background = 'black', button_foreground = 'black', button_background = 'white'):
-		pass
+		""" The function which serves the command of changing the color theme of the tkinter application (window and widgets). The user can specify the color formats using the arguments that are taken by this function :
+		* foreground -> The foreground color of the widgets like Label, etc.
+		* background -> The background color of the widgets like Label, Frame, etc and also the background color of the tkinter windows.
+		* button_foreground -> The foreground color for the Button widget. This color swaps for the active background color of the button when active (mouse cursor over the button).
+		* button_background -> The background color for the Button widget. This color swaps for the active foreground color of the button when active (mouse cursor over the button).
+
+		The user is provided pre-set color themes by the script, as well as options to custom enter the colors.
+		"""
+
+		# Defining the color_theme dictionary (the color property of this tkinter application)
+		global color_theme
+		color_theme = {
+		"foreground" : foreground,
+		"background" : background,
+		"button_foreground" : button_foreground,
+		"button_background" : button_background,
+		}
+
+		# Destroying the tkinter windows if they exists
+		try:
+			win.destroy()
+			outputWin.destroy()
+		except:
+			# If there are errors encountered during the process of destroying the tkinter windows, then we pass it as it may signal that some of the tkinter windows does not exist.
+
+			pass
+
+		# Re-launching the application by recalling the main function
+		main()
 
 	def about(tool = False, author = False):
 		pass
@@ -210,6 +236,9 @@ def exit():
 
 def fetchIp(ipAddress):
 	""" The function that fetches the required information about the IP address mentioned in the arguments while calling the information and the result (the fetched information about the IP address) is displayed in a new tkinter window. """
+
+	# Making some variables defined inside this function have global access
+	global outputWin
 
 	try:
 		# Checking the user entered IP address before proceeding
@@ -290,6 +319,9 @@ def fetchIp(ipAddress):
 		return 0
 
 def main():
+	# Making some variables defined inside this function have global access
+	global win
+
 	# Defining the main tkinter window
 	win = Tk()
 	win.title('IP Tracker (Python3)')
@@ -315,7 +347,7 @@ def main():
 	ipAddress = StringVar(win)
 
 	# Defining the frame to contain the form elements
-	frame = Frame(win, background = 'black')
+	frame = Frame(win, background = color_theme["background"])
 	frame.pack(expand = True, fill = X, padx = 5, pady = 10)
 
 	# Defining the inner contents of the frame, i.e., the form elements (Label, and entry box)
@@ -368,7 +400,7 @@ def main():
 	colorsmenu = Menu(toolsmenu, font = ('', 10), tearoff = 0)
 	toolsmenu.add_cascade(label = 'Color Themes', menu = colorsmenu)  # Configuring the colorsmenu with the toolsmenu
 	colorsmenu.add_command(label = 'Default', command = None)
-	colorsmenu.add_command(label = 'Tkinter Original', command = None)
+	colorsmenu.add_command(label = 'Tkinter Original', command = lambda : MenubarFunctions.setColorTheme(foreground = 'black', background = None, button_foreground = None, button_background = None))
 	colorsmenu.add_command(label = 'Black-White', command = None)
 	colorsmenu.add_command(label = 'Green-Black', command = None)
 	colorsmenu.add_command(label = 'Red-Black', command = None)
