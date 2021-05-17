@@ -174,7 +174,11 @@ class MenubarFunctions:
 
 # Re-defining the exit function with some additions
 def exit():
-	""""""
+	""" The function which serves the command to exit the application and end the script execution. It replaces the built-in function of python i.e., exit(). The function carries the below mentioned changes :
+	1. Fetches all the current session history logs and then saves it to the data.json file.
+	2. Ends the script execution which eventually closes all the active tkinter windows. This is done as the function calls another built-in python function 'quit()' to end the script execution.
+
+	To use this function, just directly call it. Like : exit. The function does not intakes any arguments. """
 
 	# Saving the current session logs to the overall history logs (data.json file)
 	try:
