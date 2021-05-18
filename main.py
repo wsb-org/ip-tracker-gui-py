@@ -18,8 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Added more color themes to the menubar commands.
-2. Changed the font size of the menu labels at the menubar of the main tkinter window.
+1. Removed the requests module dependency of this tool. Using the urllib library as the alternative which is available in the default python3 library.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -29,7 +28,7 @@ Authors contributed to this script (Add your name below if you have contributed)
 try:
 	from json import loads, dumps
 	from datetime import datetime
-	from requests import get
+	from urllib import request
 	from tkinter import *
 	from tkinter import messagebox as mb
 except Exception as e:
@@ -249,13 +248,15 @@ def fetchIp(ipAddress):
 
 		# Fetching the information about the user entered IP address from the server
 		# Sending the POST HTTP request
-		response = get(f'http://ipinfo.io/{ipAddress}')
+		response = request.urlopen(f'http://ipinfo.io/{ipAddress}')
 
 		# Checking the response from the server
-		if response.status_code == 200:
+		if response.status == 200:
 			# If the response from the server states no error, then we continue the process
 
-			response = response.json()
+			# Decoding the response from the server and then parsing from JSON format to python object format
+			response = response.read().decode()
+			response = loads(response)
 			text = ''
 
 			# Arranging the output text to be displayed
