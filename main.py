@@ -18,7 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Removed the requests module dependency of this tool. Using the urllib library as the alternative which is available in the default python3 library.
+1. Addded the code to the MenubarFunctions.about such that to serve the about the tool / author commands in the menubar.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -191,7 +191,89 @@ class MenubarFunctions:
 		main()
 
 	def about(tool = False, author = False):
-		pass
+		""" """
+
+		# Declaring an empty variable for storing the contents of the tkinter window as well as another variable for the heading
+		text = """"""
+		heading = ''
+
+		# Checking the task specified
+		if tool:
+			# If the function was called to display the about information of the tool, then we continue
+
+			heading = 'About IP-Tracker'
+			text = """
+This tool serves the feature of fetching information about any public server or computer
+device connected to the internet. The tool requires the public IP address of that device.
+In order to properly fetch all the required information, the tool needs some of the below
+mentioned requirements :
+[!] Internet connection
+[!] Valid and a public IP address
+
+The tool fetches the information from an external API at the website "http://ipinfo.io/".
+Thus, all backend credits goes to the creators and developer of that API, and this tool
+just provides an interface to fetch and read the information properly with an ease. The
+tool is developed in Python3 programming language. The tool also requires tkinter library
+to be installed. Thus, this makes this tool as a GUI application. This tool is also the
+GUI adaptation of the CLI tool with same name. For more info check out the docs.
+			"""
+		elif author:
+			# If the function was called to display the about information of the author, then we continue
+
+			heading = 'About the author'
+			text = """
+This tool is created by Rishav Das (https://github.com/rdofficial/). When the project
+was first initialized by the author, means me, I was in high school and the time was
+of the lockdown due to COVID-19. Thus, I created many small tools with different
+programming languages, and each of the tools serving different features, like this tool
+serves the feature of fetching information of an public IP address. I created serveral
+command line tools as well as several other graphical versions of those cli tools. The
+command line version of the tools are generally stable, light, and can be easily handled
+by the user as they do not contain extra functions like color themes or any upper GUI
+layer. The projects do not have my own complete credits, many contributions are made by
+other developers across the globe. Below are some of my contact details, for further
+information or reaching me :
+[*] Mail : rdofficial192@gmail.com
+[*] Github : rdofficial (http://github.com/rdofficial/)
+			"""
+
+		# Defining the tkinter window to display the about information
+		aboutWin = Tk()
+		aboutWin.title('About - IP-Tracker (Python3)')
+		aboutWin.resizable(0, 0)
+		aboutWin.config(background = color_theme["background"])
+
+		# Defining the labels for the heading and the content of the tkinter window
+		Label(
+			aboutWin,
+			text = heading,
+			font = ('', 14, 'bold', 'italic'),
+			foreground = color_theme["foreground"],
+			background = color_theme["background"],
+			).pack(padx = 5, pady = 5)
+		Label(
+			aboutWin,
+			text = text,
+			font = ('', 10,),
+			justify = 'left',
+			foreground = color_theme["foreground"],
+			background = color_theme["background"],
+			).pack(padx = 5, pady = 5)
+
+		# Defining the close button for the about window
+		Button(
+			aboutWin,
+			text = 'Close',
+			font = ('', 11, 'bold'),
+			foreground = color_theme["button_foreground"],
+			background = color_theme["button_background"],
+			activeforeground = color_theme["button_background"],
+			activebackground = color_theme["button_foreground"],
+			relief = GROOVE,
+			command = aboutWin.destroy,
+			).pack(padx = 5, pady = 5)
+
+		mainloop()
 
 	def help(usage = True, documentation = False, report = False):
 		pass
@@ -410,10 +492,10 @@ def main():
 	helpmenu = Menu(menubar, font = ('', 10), tearoff = 0)
 	menubar.add_cascade(label = 'Help', font = ('', 9), menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
 	helpmenu.add_command(label = 'Documentation', command = None)
-	helpmenu.add_command(label = 'About the author', command = None)
+	helpmenu.add_command(label = 'About the author', command = lambda : MenubarFunctions.about(author = True))
 	helpmenu.add_command(label = 'Report a bug', command = None)
 	helpmenu.add_separator()
-	helpmenu.add_command(label = 'About IP Tracker', command = None)
+	helpmenu.add_command(label = 'About IP Tracker', command = lambda : MenubarFunctions.about(tool = True))
 	helpmenu.add_command(label = 'Usage', command = None)
 
 	# Defining the exit command on the menubar
