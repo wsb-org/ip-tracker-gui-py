@@ -18,7 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Addded the code to the MenubarFunctions.about such that to serve the about the tool / author commands in the menubar.
+1. Changing the font configs for every tkinter widgets like the about window, labels, menubar labels, etc.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -247,14 +247,14 @@ information or reaching me :
 		Label(
 			aboutWin,
 			text = heading,
-			font = ('', 14, 'bold', 'italic'),
+			font = ('Arial', 15, 'bold', 'italic'),
 			foreground = color_theme["foreground"],
 			background = color_theme["background"],
 			).pack(padx = 5, pady = 5)
 		Label(
 			aboutWin,
 			text = text,
-			font = ('', 10,),
+			font = ('Arial', 11,),
 			justify = 'left',
 			foreground = color_theme["foreground"],
 			background = color_theme["background"],
@@ -264,7 +264,7 @@ information or reaching me :
 		Button(
 			aboutWin,
 			text = 'Close',
-			font = ('', 11, 'bold'),
+			font = ('Arial', 12, 'bold'),
 			foreground = color_theme["button_foreground"],
 			background = color_theme["button_background"],
 			activeforeground = color_theme["button_background"],
@@ -363,7 +363,7 @@ def fetchIp(ipAddress):
 				text = 'Information fetched',
 				foreground = color_theme["foreground"],
 				background = color_theme["background"],
-				font = ('', 13, 'bold', 'italic'),
+				font = ('Arial', 13, 'bold', 'italic'),
 				justify = 'left',
 				).pack(padx = 5, pady = 5)
 			Label(
@@ -371,7 +371,7 @@ def fetchIp(ipAddress):
 				text = text,
 				foreground = color_theme["foreground"],
 				background = color_theme["background"],
-				font = ('', 11, ''),
+				font = ('Arial', 11, ''),
 				justify = 'left',
 				).pack(padx = 5, pady = 5)
 
@@ -379,7 +379,7 @@ def fetchIp(ipAddress):
 			Button(
 				outputWin,
 				text = 'Close',
-				font = ('', 12, 'bold'),
+				font = ('Arial', 12, 'bold'),
 				foreground = color_theme["button_foreground"],
 				background = color_theme["button_background"],
 				activeforeground = color_theme["button_background"],
@@ -417,7 +417,7 @@ def main():
 		text = 'IP Tracker',
 		foreground = color_theme["foreground"],
 		background = color_theme["background"],
-		font = ('', 15, 'bold', 'italic'),
+		font = ('Arial', 15, 'bold', 'italic'),
 		).pack(padx = 5, pady = (10, 20))
 
 	# Defining the input box form for the user to enter the IP address
@@ -439,19 +439,19 @@ def main():
 		text = 'Enter the IP address of target',
 		foreground = color_theme["foreground"],
 		background = color_theme["background"],
-		font = ('', 12),
+		font = ('Arial', 12),
 		).pack(side = LEFT, padx = 5, pady = 5)
 	Entry(
 		frame,
 		textvariable = ipAddress,
-		font = ('', 12),
+		font = ('Arial', 12),
 		).pack(side = RIGHT, padx = 5, pady = 5)
 
 	# Defining the continue button widget
 	Button(
 		win,
 		text = 'Continue',
-		font = ('', 12, 'bold'),
+		font = ('Arial', 12, 'bold'),
 		foreground = color_theme["button_foreground"],
 		background = color_theme["button_background"],
 		activeforeground = color_theme["button_background"],
@@ -471,8 +471,8 @@ def main():
 	win.config(menu = menubar)  # Configuring the main tkinter window to use the menubar
 
 	# Defining the toolsmenu
-	toolsmenu = Menu(menubar, font = ('', 10), tearoff = 0)
-	menubar.add_cascade(label = 'Tools', font = ('', 9), menu = toolsmenu)  # Configuring the toolsmenu with the main menubar
+	toolsmenu = Menu(menubar, font = ('Arial', 11), tearoff = 0)
+	menubar.add_cascade(label = 'Tools', font = ('Arial', 11), menu = toolsmenu)  # Configuring the toolsmenu with the main menubar
 	toolsmenu.add_command(label = 'Session history', command = lambda : MenubarFunctions.history(fetch = True, session = True))
 	toolsmenu.add_command(label = 'Clear session history', command = lambda : MenubarFunctions.history(clear = True, session = True))
 	toolsmenu.add_command(label = 'Overall history', command = lambda : MenubarFunctions.history(fetch = True, session = False))
@@ -480,7 +480,7 @@ def main():
 	toolsmenu.add_separator()
 	#
 	# Defining the colors sub-menu for the toolsmenu (This menu will show as a side menu in the tools menu and displays the list of the colors themes available for the tkinter window).
-	colorsmenu = Menu(toolsmenu, font = ('', 10), tearoff = 0)
+	colorsmenu = Menu(toolsmenu, font = ('Arial', 11), tearoff = 0)
 	toolsmenu.add_cascade(label = 'Color Themes', menu = colorsmenu)  # Configuring the colorsmenu with the toolsmenu
 	colorsmenu.add_command(label = 'Default', command = lambda : MenubarFunctions.setColorTheme(foreground = 'white', background = 'black', button_foreground = 'black', button_background = 'white'))
 	colorsmenu.add_command(label = 'Tkinter Original', command = lambda : MenubarFunctions.setColorTheme(foreground = 'black', background = None, button_foreground = None, button_background = None))
@@ -489,8 +489,8 @@ def main():
 	colorsmenu.add_command(label = 'Red-Black', command = lambda : MenubarFunctions.setColorTheme(foreground = 'red', background = 'black', button_foreground = 'black', button_background = 'red'))
 
 	# Defining the helpmenu
-	helpmenu = Menu(menubar, font = ('', 10), tearoff = 0)
-	menubar.add_cascade(label = 'Help', font = ('', 9), menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
+	helpmenu = Menu(menubar, font = ('Arial', 11), tearoff = 0)
+	menubar.add_cascade(label = 'Help', font = ('Arial', 11), menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
 	helpmenu.add_command(label = 'Documentation', command = None)
 	helpmenu.add_command(label = 'About the author', command = lambda : MenubarFunctions.about(author = True))
 	helpmenu.add_command(label = 'Report a bug', command = None)
@@ -499,7 +499,7 @@ def main():
 	helpmenu.add_command(label = 'Usage', command = None)
 
 	# Defining the exit command on the menubar
-	menubar.add_command(label = 'Exit', font = ('', 9), command = exit)
+	menubar.add_command(label = 'Exit', font = ('Arial', 11), command = exit)
 	# ----
 
 	mainloop()
