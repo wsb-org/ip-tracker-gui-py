@@ -18,8 +18,8 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Added the function 'setColorTheme' to serve the menu commands of changing color themes of the tkinter window and widgets.
-2. Adding the menu command for setting the tkinter original theme.
+1. Added more color themes to the menubar commands.
+2. Changed the font size of the menu labels at the menubar of the main tkinter window.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -389,7 +389,7 @@ def main():
 
 	# Defining the toolsmenu
 	toolsmenu = Menu(menubar, font = ('', 10), tearoff = 0)
-	menubar.add_cascade(label = 'Tools', menu = toolsmenu)  # Configuring the toolsmenu with the main menubar
+	menubar.add_cascade(label = 'Tools', font = ('', 9), menu = toolsmenu)  # Configuring the toolsmenu with the main menubar
 	toolsmenu.add_command(label = 'Session history', command = lambda : MenubarFunctions.history(fetch = True, session = True))
 	toolsmenu.add_command(label = 'Clear session history', command = lambda : MenubarFunctions.history(clear = True, session = True))
 	toolsmenu.add_command(label = 'Overall history', command = lambda : MenubarFunctions.history(fetch = True, session = False))
@@ -399,15 +399,15 @@ def main():
 	# Defining the colors sub-menu for the toolsmenu (This menu will show as a side menu in the tools menu and displays the list of the colors themes available for the tkinter window).
 	colorsmenu = Menu(toolsmenu, font = ('', 10), tearoff = 0)
 	toolsmenu.add_cascade(label = 'Color Themes', menu = colorsmenu)  # Configuring the colorsmenu with the toolsmenu
-	colorsmenu.add_command(label = 'Default', command = None)
+	colorsmenu.add_command(label = 'Default', command = lambda : MenubarFunctions.setColorTheme(foreground = 'white', background = 'black', button_foreground = 'black', button_background = 'white'))
 	colorsmenu.add_command(label = 'Tkinter Original', command = lambda : MenubarFunctions.setColorTheme(foreground = 'black', background = None, button_foreground = None, button_background = None))
-	colorsmenu.add_command(label = 'Black-White', command = None)
-	colorsmenu.add_command(label = 'Green-Black', command = None)
-	colorsmenu.add_command(label = 'Red-Black', command = None)
+	colorsmenu.add_command(label = 'Black-White', command = lambda : MenubarFunctions.setColorTheme(foreground = 'black', background = 'white', button_foreground = 'white', button_background = 'black'))
+	colorsmenu.add_command(label = 'Green-Black', command = lambda : MenubarFunctions.setColorTheme(foreground = 'green', background = 'black', button_foreground = 'black', button_background = 'green'))
+	colorsmenu.add_command(label = 'Red-Black', command = lambda : MenubarFunctions.setColorTheme(foreground = 'red', background = 'black', button_foreground = 'black', button_background = 'red'))
 
 	# Defining the helpmenu
 	helpmenu = Menu(menubar, font = ('', 10), tearoff = 0)
-	menubar.add_cascade(label = 'Help', menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
+	menubar.add_cascade(label = 'Help', font = ('', 9), menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
 	helpmenu.add_command(label = 'Documentation', command = None)
 	helpmenu.add_command(label = 'About the author', command = None)
 	helpmenu.add_command(label = 'Report a bug', command = None)
@@ -416,7 +416,7 @@ def main():
 	helpmenu.add_command(label = 'Usage', command = None)
 
 	# Defining the exit command on the menubar
-	menubar.add_command(label = 'Exit', command = exit)
+	menubar.add_command(label = 'Exit', font = ('', 9), command = exit)
 	# ----
 
 	mainloop()
