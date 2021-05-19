@@ -15,10 +15,10 @@ Author : Rishav Das (https://github.com/rdofficial/)
 Created on : May 16, 2021
 
 Last modified by : Rishav Das (https://github.com/rdofficial/)
-Last modified on : May 17, 2021
+Last modified on : May 19, 2021
 
 Changes made in last modification :
-1. Defined the functions that serves the commands at the help menu of the tkinter window. We defined the help function contained inside the MenuFunctions. Added the commands - documentation, report, usage.
+1. Changed the way of displaying about author, tool from creating a seperate tkinter window to a messagebox.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -238,41 +238,8 @@ information or reaching me :
 [*] Github : rdofficial (http://github.com/rdofficial/)
 			"""
 
-		# Defining the tkinter window to display the about information
-		aboutWin = Tk()
-		aboutWin.title('About - IP-Tracker (Python3)')
-		aboutWin.resizable(0, 0)
-		aboutWin.config(background = color_theme["background"])
-
-		# Defining the labels for the heading and the content of the tkinter window
-		Label(
-			aboutWin,
-			text = heading,
-			font = ('Arial', 15, 'bold', 'italic'),
-			foreground = color_theme["foreground"],
-			background = color_theme["background"],
-			).pack(padx = 5, pady = 5)
-		Label(
-			aboutWin,
-			text = text,
-			font = ('Arial', 11,),
-			justify = 'left',
-			foreground = color_theme["foreground"],
-			background = color_theme["background"],
-			).pack(padx = 5, pady = 5)
-
-		# Defining the close button for the about window
-		Button(
-			aboutWin,
-			text = 'Close',
-			font = ('Arial', 12, 'bold'),
-			foreground = color_theme["button_foreground"],
-			background = color_theme["button_background"],
-			activeforeground = color_theme["button_background"],
-			activebackground = color_theme["button_foreground"],
-			relief = GROOVE,
-			command = aboutWin.destroy,
-			).pack(padx = 5, pady = 5)
+		# Displaying the information to the user using the messagebox
+		mb.showinfo(heading, text)
 
 		mainloop()
 
