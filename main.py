@@ -18,7 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 17, 2021
 
 Changes made in last modification :
-1. Changing the font configs for every tkinter widgets like the about window, labels, menubar labels, etc.
+1. Defined the functions that serves the commands at the help menu of the tkinter window. We defined the help function contained inside the MenuFunctions. Added the commands - documentation, report, usage.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -29,6 +29,7 @@ try:
 	from json import loads, dumps
 	from datetime import datetime
 	from urllib import request
+	from webbrowser import open as webOpen
 	from tkinter import *
 	from tkinter import messagebox as mb
 except Exception as e:
@@ -275,8 +276,44 @@ information or reaching me :
 
 		mainloop()
 
-	def help(usage = True, documentation = False, report = False):
-		pass
+	def help(usage = False, documentation = False, report = False):
+		""" This function serves the commands at the help menu of the application. The functions serves a few commands as per listed : documentation, usage, report. The function serves the tasks as per the arguments specified. Below are mentioned all those steps to execute a particular tasks using this function :
+		* Usage -> MenuFunctions.help(usage = True)
+		* Documentation -> MenuFunctions.help(documentation = True)
+		* Report -> MenuFunctions.help(report = True) 
+
+		For further more information, check out the documentation for this tool. """
+
+		# Checking the task specified
+		if usage:
+			# If the function was called to display the usage of this tool, then we continue to do so
+
+			pass
+		elif documentation:
+			# If the function was called to display the documentation, then we continue to do so
+
+			# Asking the user whether to redirect to the documentation pages available on the github mirror of this project's repository
+			choice = mb.askyesno('Redirection to documentation', 'To get the documentation of this tool, we will be redirecting to an external link (https://github.com/wsb-org/ip-tracker-gui-py/). Press yes to continue, and no to abort.')
+			if choice:
+				# If the user choosed to redirect to the documentation, then we continue
+
+				webOpen('https://github.com/wsb-org/ip-tracker-gui-py/blob/main/docs/')
+		elif report:
+			# If the function was called to submit a report, then we continue to do so
+
+			# Giving the user proper instructions on submitting a report
+			mb.showinfo(
+				'Submitting a report',
+				"""
+In order to submit a proper report, first your report must be of a valid reason like bugs, errors, etc. If you are concerned with what errors might occur or already occured, then you can proceed to submit a report. Also, you can submit a report if you are unsatisfied of the features or any function of this tool. Follow the below steps to submit report. There are two ways to submit a report, both are listed below :
+1. Via Github Issue :
+In order to submit a report, there is a way of doing so by creating a github issue on this repository at https://github.com/wsb-org/ip-tracker-gui-py/. For executing this task, you would also require a github account.
+
+2. Via E-Mail :
+In order to submit a report, there is a way of doing so by sending a proper email to the author. All the points should be mentioned and also the mail should be send in a proper way otherwise the mail would be considered as spam and ignored. Send the report via mail at the address - rdofficial192@gmail.com.
+				""",
+				)
+
 # ----
 
 # Re-defining the exit function with some additions
@@ -491,12 +528,12 @@ def main():
 	# Defining the helpmenu
 	helpmenu = Menu(menubar, font = ('Arial', 11), tearoff = 0)
 	menubar.add_cascade(label = 'Help', font = ('Arial', 11), menu = helpmenu)  # Configuring the colorsmenu with the toolsmenu
-	helpmenu.add_command(label = 'Documentation', command = None)
+	helpmenu.add_command(label = 'Documentation', command = lambda : MenubarFunctions.help(documentation = True))
 	helpmenu.add_command(label = 'About the author', command = lambda : MenubarFunctions.about(author = True))
-	helpmenu.add_command(label = 'Report a bug', command = None)
+	helpmenu.add_command(label = 'Report a bug', command = lambda : MenubarFunctions.help(report = True))
 	helpmenu.add_separator()
 	helpmenu.add_command(label = 'About IP Tracker', command = lambda : MenubarFunctions.about(tool = True))
-	helpmenu.add_command(label = 'Usage', command = None)
+	helpmenu.add_command(label = 'Usage', command = lambda : MenubarFunctions.help(usage = True))
 
 	# Defining the exit command on the menubar
 	menubar.add_command(label = 'Exit', font = ('Arial', 11), command = exit)
