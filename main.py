@@ -415,6 +415,9 @@ def main():
 	win.resizable(0, 0)
 	win.config(background = color_theme["background"])
 
+	# Changing the font format configuration for the messagebox
+	win.option_add('*Dialog.msg.font', 'Arial 11')
+
 	# Defining the heading label
 	Label(
 		win,
