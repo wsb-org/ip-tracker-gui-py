@@ -18,7 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 19, 2021
 
 Changes made in last modification :
-1. Changed the way of displaying about author, tool from creating a seperate tkinter window to a messagebox.
+1. Changed the font configuration for the tkinter messagebox.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -414,6 +414,9 @@ def main():
 	win.title('IP Tracker (Python3)')
 	win.resizable(0, 0)
 	win.config(background = color_theme["background"])
+
+	# Changing the font format configuration for the messagebox
+	win.option_add('*Dialog.msg.font', 'Arial 11')
 
 	# Defining the heading label
 	Label(
