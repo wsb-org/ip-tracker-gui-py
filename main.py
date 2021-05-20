@@ -18,8 +18,7 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 19, 2021
 
 Changes made in last modification :
-1. Updating the documentation (__doc__) for the functions defined inside this script file.
-2. Adding the code to display the tool usage in the MenubarFunctions.help function.
+1. Updating the modules and functions imported, from importing all elements in the tkinter library to importing only a few required-only elements.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -31,7 +30,11 @@ try:
 	from datetime import datetime
 	from urllib import request
 	from webbrowser import open as webOpen
-	from tkinter import *
+
+	# Importing all the required functions and classes from the tkinter library
+	from tkinter import Tk, mainloop
+	from tkinter import Frame, Label, Button, Entry, Menu
+	from tkinter import X, Y, LEFT, RIGHT, GROOVE, StringVar
 	from tkinter import messagebox as mb
 except Exception as e:
 	# If there are any errors while the importing of modules, then we display the error message on the console screen
