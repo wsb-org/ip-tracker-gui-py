@@ -1,8 +1,16 @@
 # The ignore list - IP Tracker [GUI, Python3]
 # ----
 # 1. Ignore the python3 cache directories as well as the test directories too.
+# 2. Ignore all the JSON and database files that are used to store the in-app data.
 # ----
 
+# Ignoring the tests and python cache files/directories
 tests/
 test*
 __pycache__/
+
+# Ignoring all the JSON files and database files
+*.json
+*.db
+*.database
+*.sqlite3
