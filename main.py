@@ -18,7 +18,9 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 19, 2021
 
 Changes made in last modification :
-1. Updating the modules and functions imported, from importing all elements in the tkinter library to importing only a few required-only elements.
+1. Updating the feature of saving fetched data to a file on the local machine (current working directory).
+2. Added the menubar command to display the already saved data (fetched_data.json).
+3. Updated the __doc__ of the function MenubarFunctions.fetchedData() and MenubarFunctions.help().
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -254,9 +256,9 @@ information or reaching me :
 
 	def help(usage = False, documentation = False, report = False):
 		""" This function serves the commands at the help menu of the application. The functions serves a few commands as per listed : documentation, usage, report. The function serves the tasks as per the arguments specified. Below are mentioned all those steps to execute a particular tasks using this function :
-		* Usage -> MenuFunctions.help(usage = True)
-		* Documentation -> MenuFunctions.help(documentation = True)
-		* Report -> MenuFunctions.help(report = True) 
+		* Usage -> MenubarFunctions.help(usage = True)
+		* Documentation -> MenubarFunctions.help(documentation = True)
+		* Report -> MenubarFunctions.help(report = True) 
 
 		For further more information, check out the documentation for this tool. """
 
@@ -303,7 +305,17 @@ In order to submit a report, there is a way of doing so by sending a proper emai
 				)
 
 	def fetchedData(save = False, display = False, data = False):
-		""" """
+		""" This function serves the commands for saving the fetched data as well as displaying the already saved fetched data. To get the execution of the proper task, we need to mention the tasks through the arguments. Below are mentioned some of the steps for this purpose :
+		* To save a fetched data -> MenubarFunctions.fetchedData(save = True, data = {your-data-in-dict-format})
+		* To display an already saved data -> MenubarFunctions.fetchedData(display = True)
+
+		Note :
+		* The save task when executed saves the data to a file named 'fetched_data.json' in the current working directory. Also the save task can be directly executed via the output window save-button. Thus, we dont need to call it anytime.
+		* The display task loads the data from the file named 'fetched_data.json' in the current working directory. Thus, if there are no such files available, then an error message is displayed. But, before the loading process this concerning information is displayed to the user.
+		For further more information, check the documentation for this tool. """
+
+		# Making some variables defined inside this function have global access
+		global outputWin
 
 		# Checking the task specified
 		if save:
@@ -318,11 +330,12 @@ In order to submit a report, there is a way of doing so by sending a proper emai
 				# If the data is properly defined, then we continue to save the data
 
 				try:
+					data["datetime"] = datetime.now().ctime()
 					open('fetched_data.json', 'w+').write(dumps(data))
 				except Exception as e:
 					# If there are any errors encountered during the process, then we display the error message to the user
 
-					mb.showerror('Error', f'{e}')
+					mb.showerror('Error in saving the data', f'{e}')
 				else:
 					# If there are no errors encountered during the process, then we display the success message to the user
 
@@ -331,7 +344,77 @@ In order to submit a report, there is a way of doing so by sending a proper emai
 		elif display:
 			# If the function was called to display the already saved data, then we continue to do so
 
-			pass
+			# Displaying the warning to the user before asking yes / no choice
+			choice = mb.askyesno('Load saved data', 'Continuing from here will load the already saved data in the file "fetched_data.json". If the file does not exists in the current working directory, then you might face some errors. Press Yes to continue, and No to abort.')
+			if choice:
+				# If the user pressed yes button, then we continue the process
+
+				try:
+					# Fetching the data from the file
+					data = loads(open('fetched_data.json', 'r').read())
+				except Exception as e:
+					# If there are any errors encountered during the process, then we display the error message to the user
+
+					mb.showerror('Failed to load saved data', f'{e}')
+					return 0
+				else:
+					# If there are no errors encountered while loading all the data stored in fetched_data.json file along with parsing it in JSON format, then we continue to display the information
+
+					# Arranging the output text to be displayed
+					text = ''
+					for key, value in data.items():
+						text += '[#] %-20s   :   %-30s\n' %(str(key).upper(), str(value))
+
+					# Destroying the outputWin only if exists (in order to re-define / re-create it again)
+					try:
+						if outputWin.status() == 'normal':
+							# If the outputWin exists, then we destroy it
+
+							outputWin.destroy()
+					except:
+						# If there are any errors encountered during the process, then we assume that the outputWin does not exists and thus we pass
+
+						pass
+
+					# Creating the tkinter window to display the result
+					outputWin = Tk()
+					outputWin.title('Data saved - IP Tracker (Python3)')
+					outputWin.config(background = color_theme["background"])
+					outputWin.resizable(0, 0)  # Making the tkinter window's size to remain fixed, i.e., it cannot change.
+
+					# Definining the heading label and the output label
+					Label(
+						outputWin,
+						text = 'Saved information',
+						foreground = color_theme["foreground"],
+						background = color_theme["background"],
+						font = ('Arial', 13, 'bold', 'italic'),
+						justify = 'left',
+						).pack(padx = 5, pady = 5)
+					Label(
+						outputWin,
+						text = text,
+						foreground = color_theme["foreground"],
+						background = color_theme["background"],
+						font = ('Arial', 11, ''),
+						justify = 'left',
+						).pack(padx = 5, pady = 5)
+
+					# Defining the close button on the output window. This button will destroy / close the output window, when the user clicks it.
+					Button(
+						outputWin,
+						text = 'Close',
+						font = ('Arial', 12, 'bold'),
+						foreground = color_theme["button_foreground"],
+						background = color_theme["button_background"],
+						activeforeground = color_theme["button_background"],
+						activebackground = color_theme["button_foreground"],
+						relief = GROOVE,
+						command = outputWin.destroy,
+						).pack(padx = 5, pady = 5)
+					# ----
+
+					mainloop()
 # ----
 
 # Re-defining the exit function with some additions
@@ -566,6 +649,10 @@ def main():
 	colorsmenu.add_command(label = 'Black-White', command = lambda : MenubarFunctions.setColorTheme(foreground = 'black', background = 'white', button_foreground = 'white', button_background = 'black'))
 	colorsmenu.add_command(label = 'Green-Black', command = lambda : MenubarFunctions.setColorTheme(foreground = 'green', background = 'black', button_foreground = 'black', button_background = 'green'))
 	colorsmenu.add_command(label = 'Red-Black', command = lambda : MenubarFunctions.setColorTheme(foreground = 'red', background = 'black', button_foreground = 'black', button_background = 'red'))
+	#
+	# Defining the command for displaying the saved fetched data (in the file fetched_data.json)
+	toolsmenu.add_separator()
+	toolsmenu.add_command(label = 'Display the saved data', command = lambda : MenubarFunctions.fetchedData(display = True))
 
 	# Defining the helpmenu
 	helpmenu = Menu(menubar, font = ('Arial', 11), tearoff = 0)
