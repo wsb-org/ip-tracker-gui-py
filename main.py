@@ -18,7 +18,8 @@ Last modified by : Rishav Das (https://github.com/rdofficial/)
 Last modified on : May 19, 2021
 
 Changes made in last modification :
-1. Changed the font configuration for the tkinter messagebox.
+1. Updating the documentation (__doc__) for the functions defined inside this script file.
+2. Adding the code to display the tool usage in the MenubarFunctions.help function.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -64,7 +65,7 @@ class MenubarFunctions:
 	""" This class contains all the functions which serves the commands at the menubar of the tkinter application. """
 
 	def history(fetch = False, clear = False, session = True):
-		""" The function which serves the history related commands in the tools menu of the tkinter application. This function currently serves the tasks : (1) Fetch the current session history, (2) Fetch the overall history, (3) Clear the session history, (4) Clear the overall history. The tasks are specified using the arguments of the function. Below are given proper instructions on how to call the function in order to execute a particular task :
+		""" This function serves the history related commands in the tools menu of the tkinter application. This function currently serves the tasks : (1) Fetch the current session history, (2) Fetch the overall history, (3) Clear the session history, (4) Clear the overall history. The tasks are specified using the arguments of the function. Below are given proper instructions on how to call the function in order to execute a particular task :
 
 		* To fetch the current session history -> MenubarFunctions.history(fetch = True, session = True)
 		* To clear the current session history -> MenubarFunctions.history(clear = True, session = True)
@@ -161,7 +162,7 @@ class MenubarFunctions:
 			return 0
 
 	def setColorTheme(foreground = 'white', background = 'black', button_foreground = 'black', button_background = 'white'):
-		""" The function which serves the command of changing the color theme of the tkinter application (window and widgets). The user can specify the color formats using the arguments that are taken by this function :
+		""" This function serves the command of changing the color theme of the tkinter application (window and widgets). The user can specify the color formats using the arguments that are taken by this function :
 		* foreground -> The foreground color of the widgets like Label, etc.
 		* background -> The background color of the widgets like Label, Frame, etc and also the background color of the tkinter windows.
 		* button_foreground -> The foreground color for the Button widget. This color swaps for the active background color of the button when active (mouse cursor over the button).
@@ -192,7 +193,12 @@ class MenubarFunctions:
 		main()
 
 	def about(tool = False, author = False):
-		""" """
+		""" This function serves the commands at the helpmenu related, and those commands are : About the author, About the tool. The function executes the task as per the arguments specified. To call for the specific commands using the function, the syntax are given below :
+		* Display about the author information : MenubarFunctions.about(author = True)
+		* Display about the tool information : MenubarFunctions.about(tool = True)
+
+		This function uses the tkinter.messagebox to display the required information to the user.
+		For further more information, check out the documentation. """
 
 		# Declaring an empty variable for storing the contents of the tkinter window as well as another variable for the heading
 		text = """"""
@@ -255,7 +261,19 @@ information or reaching me :
 		if usage:
 			# If the function was called to display the usage of this tool, then we continue to do so
 
-			pass
+			# Giving the user the proper instructions on the usage for this function
+			mb.showinfo(
+				'Usage - IP-Tracker (Python3)',
+				"""
+Below are listed the steps for properly using this tool.
+	1. On launching the tool, either using terminal (command : python3 main.py), or by direct execution. The first screen that is loaded is a form asking us to enter the required IP address to track.
+	2. Enter the IP address on the input box and press the continue button. The required information will be loaded via a new window. Note all the information.
+	3. The application also tracks the history of search i.e. List of all the IP addresses ever tracked using this tool. To view the history, check the tools menu.
+	4 To close the tool, prefer to press the exit command on the menubar instead of the close window button. (This exit command first saves the history and then closes the tool, unlike the window close button directly closes the tool without saving the history).
+
+For more in-depth information, check out the documentation.
+				""",
+				)
 		elif documentation:
 			# If the function was called to display the documentation, then we continue to do so
 
@@ -270,7 +288,7 @@ information or reaching me :
 
 			# Giving the user proper instructions on submitting a report
 			mb.showinfo(
-				'Submitting a report',
+				'Submitting a report - IP-Tracker (Python3)',
 				"""
 In order to submit a proper report, first your report must be of a valid reason like bugs, errors, etc. If you are concerned with what errors might occur or already occured, then you can proceed to submit a report. Also, you can submit a report if you are unsatisfied of the features or any function of this tool. Follow the below steps to submit report. There are two ways to submit a report, both are listed below :
 1. Via Github Issue :
@@ -280,12 +298,11 @@ In order to submit a report, there is a way of doing so by creating a github iss
 In order to submit a report, there is a way of doing so by sending a proper email to the author. All the points should be mentioned and also the mail should be send in a proper way otherwise the mail would be considered as spam and ignored. Send the report via mail at the address - rdofficial192@gmail.com.
 				""",
 				)
-
 # ----
 
 # Re-defining the exit function with some additions
 def exit():
-	""" The function which serves the command to exit the application and end the script execution. It replaces the built-in function of python i.e., exit(). The function carries the below mentioned changes :
+	""" This function serves the command to exit the application and end the script execution. It replaces the built-in function of python i.e., exit(). The function carries the below mentioned changes :
 	1. Fetches all the current session history logs and then saves it to the data.json file.
 	2. Ends the script execution which eventually closes all the active tkinter windows. This is done as the function calls another built-in python function 'quit()' to end the script execution.
 
@@ -320,7 +337,7 @@ def exit():
 			quit()
 
 def fetchIp(ipAddress):
-	""" The function that fetches the required information about the IP address mentioned in the arguments while calling the information and the result (the fetched information about the IP address) is displayed in a new tkinter window. """
+	""" This function fetches the required information about the IP address mentioned in the arguments while calling the information and the result (the fetched information about the IP address) is displayed in a new tkinter window. """
 
 	# Making some variables defined inside this function have global access
 	global outputWin
