@@ -301,6 +301,37 @@ In order to submit a report, there is a way of doing so by creating a github iss
 In order to submit a report, there is a way of doing so by sending a proper email to the author. All the points should be mentioned and also the mail should be send in a proper way otherwise the mail would be considered as spam and ignored. Send the report via mail at the address - rdofficial192@gmail.com.
 				""",
 				)
+
+	def fetchedData(save = False, display = False, data = False):
+		""" """
+
+		# Checking the task specified
+		if save:
+			# If the function was called to save the fetched data, then we continue to do so
+
+			# Getting the fetched data specified in the arguments
+			if data == False:
+				# If the data is not defined, then we display the error message to the user
+
+				mb.showerror('Error', 'Failed to save the fetched data due to some internal error.')
+			else:
+				# If the data is properly defined, then we continue to save the data
+
+				try:
+					open('fetched_data.json', 'w+').write(dumps(data))
+				except Exception as e:
+					# If there are any errors encountered during the process, then we display the error message to the user
+
+					mb.showerror('Error', f'{e}')
+				else:
+					# If there are no errors encountered during the process, then we display the success message to the user
+
+					mb.showinfo('Requested data saved', f'The requested data is saved at the file fetched_data.json. Copy the data from the file, before saving another data. Or, the file will be replaced with new data.')
+				return 0
+		elif display:
+			# If the function was called to display the already saved data, then we continue to do so
+
+			pass
 # ----
 
 # Re-defining the exit function with some additions
@@ -399,9 +430,29 @@ def fetchIp(ipAddress):
 				justify = 'left',
 				).pack(padx = 5, pady = 5)
 
+			# Defining the frame which contains the buttons for saving data as wel as closing the window
+			# ----
+			# 1. This frame contains the buttons : Save data, Close.
+			# ----
+			frame = Frame(outputWin, background = color_theme["background"])
+			frame.pack(expand = True, fill = X, padx = 5, pady = 10)
+
+			# Defining the button for saving the fetched data into a local file
+			Button(
+				frame,
+				text = 'Save data',
+				font = ('Arial', 12, 'bold'),
+				foreground = color_theme["button_foreground"],
+				background = color_theme["button_background"],
+				activeforeground = color_theme["button_background"],
+				activebackground = color_theme["button_foreground"],
+				relief = GROOVE,
+				command = lambda : MenubarFunctions.fetchedData(save = True, data = response),
+				).pack(side = LEFT, padx = 5, pady = 5)
+
 			# Defining the close button on the output window. This button will destroy / close the output window, when the user clicks it.
 			Button(
-				outputWin,
+				frame,
 				text = 'Close',
 				font = ('Arial', 12, 'bold'),
 				foreground = color_theme["button_foreground"],
@@ -410,7 +461,8 @@ def fetchIp(ipAddress):
 				activebackground = color_theme["button_foreground"],
 				relief = GROOVE,
 				command = outputWin.destroy,
-				).pack(padx = 5, pady = 10)
+				).pack(side = RIGHT, padx = 5, pady = 5)
+			# ----
 
 			mainloop()
 		else:
