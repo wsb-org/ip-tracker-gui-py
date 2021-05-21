@@ -15,12 +15,10 @@ Author : Rishav Das (https://github.com/rdofficial/)
 Created on : May 16, 2021
 
 Last modified by : Rishav Das (https://github.com/rdofficial/)
-Last modified on : May 19, 2021
+Last modified on : May 21, 2021
 
 Changes made in last modification :
-1. Updating the feature of saving fetched data to a file on the local machine (current working directory).
-2. Added the menubar command to display the already saved data (fetched_data.json).
-3. Updated the __doc__ of the function MenubarFunctions.fetchedData() and MenubarFunctions.help().
+1. Updating the error message strings due to the change in the code of pulling out the HTTP GET requests.
 
 Authors contributed to this script (Add your name below if you have contributed) :
 1. Rishav Das (github:https://github.com/rdofficial/, email:rdofficial192@gmail.com)
@@ -551,7 +549,7 @@ def fetchIp(ipAddress):
 		else:
 			# If the response fromthe server states error, then we display the error message to the user
 
-			mb.showerror(f'{response.json()["error"]["title"]}', f'{response.json()["error"]["message"]}')
+			mb.showerror(f'{loads(response.read().decode())["error"]["title"]}', f'{loads(response.read().decode())["error"]["message"]}')
 			return 0
 
 	except Exception as e:
